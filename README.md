@@ -34,6 +34,7 @@ php artisan make:filament-user
 ```
 php artisan storage:link
 ```
+php artisan serve
 
 ## Export Products and Categories to Excel
 
