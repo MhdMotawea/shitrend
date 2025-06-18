@@ -3,24 +3,23 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class ContactEmail extends Mailable
+class OrderConfirmation extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $formData;
+    public $orderData;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(array $formData)
+      public function __construct(array $orderData)
     {
-        $this->formData = $formData;
+        $this->orderData = $orderData;
     }
 
     /**
@@ -29,7 +28,7 @@ class ContactEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-           subject: "طلب تواصل",
+            subject: 'طلب جديد',
         );
     }
 
@@ -39,7 +38,7 @@ class ContactEmail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.contact-form'
+            markdown: 'emails.orders.confirmation',
         );
     }
 

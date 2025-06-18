@@ -89,6 +89,12 @@ class ProductResource extends Resource
 
 
                     Section::make()->schema([
+                        FileUpload::make('preview_image')
+                                ->label('صورة العرض')
+                                ->required()
+                                ->directory('products/preview')
+                                ->reorderable(),
+
                         FileUpload::make('images')
                                 ->label('الصور')
                                 ->required()
@@ -98,9 +104,10 @@ class ProductResource extends Resource
                                 ->reorderable()
                     ]),
 
-                    Forms\Components\Section::make('خيارات طلب المنتج')
+                    Forms\Components\Section::make()
                     ->schema([
                         Forms\Components\Repeater::make('options')
+                            ->label('خيارات طلب المنتج')
                             ->relationship()
                             ->schema([
                                 Forms\Components\TextInput::make('title')
@@ -140,7 +147,6 @@ class ProductResource extends Resource
                             ->itemLabel(fn (array $state): ?string => $state['title'] ?? null)
                             ->defaultItems(1)
                             ->collapsible()
-                            ->collapsed()
                             ->addActionLabel('اضافة خيار'),
                     ]),
 
@@ -207,13 +213,8 @@ class ProductResource extends Resource
                     ->label("حالة المنتج")
                     ->boolean(),
 
-                ImageColumn::make('images')
+                ImageColumn::make('preview_image')
                     ->label('الصورة')
-                    ->getStateUsing(function ($record) {
-                        // Get the first image from the JSON array
-                        $images = $record->images;
-                        return is_array($images) && !empty($images) ? $images[0] : null;
-                    })
                     ->width(50) // Set the width of the image in the table
                     ->height(50), // Set the height of the image in the table
 
